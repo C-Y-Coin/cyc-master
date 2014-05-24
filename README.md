@@ -13,7 +13,7 @@ ConspiracyCoin is a lite version of Bitcoin using X11 as a proof-of-work algorit
  - GPU/CPU only mining
  - Block generation: 2.5 minutes
  - Difficulty Retargets every block using DGW
- - Est. ~33M Coins
+ - Est. ~38M Coins
 
 For more information, as well as an immediately useable, binary version of
 the ConspiracyCoin client sofware, see http://www.conspiracycoin.org
