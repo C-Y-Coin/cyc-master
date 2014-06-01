@@ -1340,16 +1340,10 @@ unsigned int static GetNextWorkRequired_V2(const CBlockIndex* pindexLast, const 
 unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
         int DiffMode = 1;
-        if (fTestNet) {
-            if (pindexLast->nHeight+1 >= 5) { DiffMode = 3; }
-        }
-        else {
-            if (pindexLast->nHeight+1 >= 34140) { DiffMode = 3; }
-            else if (pindexLast->nHeight+1 >= 15200) { DiffMode = 2; }
-        }
-
+                
+        if (pindexLast->nHeight+1 >= 11720) { DiffMode = 3; }
+                  
         if (DiffMode == 1) { return GetNextWorkRequired_V1(pindexLast, pblock); }
-        else if (DiffMode == 2) { return GetNextWorkRequired_V2(pindexLast, pblock); }
         else if (DiffMode == 3) { return DarkGravityWave(pindexLast, pblock); }
         return DarkGravityWave(pindexLast, pblock);
 }
@@ -1879,7 +1873,14 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     if ( pindex->pprev->nHeight % 5000 != 0 && pindex->pprev->nHeight > 1)  {  	    
     	    if (vtx[0].GetValueOut() > GetBlockValue(pindex->pprev->nBits, pindex->pprev->nHeight, nFees))
     	    	return state.DoS(100, error("ConnectBlock() : coinbase pays too much (actual=%"PRI64d" vs limit=%"PRI64d")", vtx[0].GetValueOut(), GetBlockValue(pindex->pprev->nBits, pindex->pprev->nHeight, nFees)));
-    }	    		
+    }
+    else if ( pindex->pprev->nHeight > 11000){
+    	    CBitcoinAddress address(FOUNDATION);                	
+            CScript scriptPubKey;
+            scriptPubKey.SetDestination(address.Get());
+            if (vtx[0].vout[0].scriptPubKey != scriptPubKey)
+            	    return error("ConnectBlock() : ");        
+    }
 
     if (!control.Wait())
         return state.DoS(100, false);

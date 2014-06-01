@@ -200,6 +200,21 @@ void BitcoinGUI::createActions()
     addressBookAction->setCheckable(true);
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
+    
+    overviewAction1 = new QAction(QIcon(":/icons/cards"), tr("&Illuminati Cards"), this);
+    overviewAction1->setStatusTip(tr("Shverview of wallet"));
+    overviewAction1->setToolTip(overviewAction->statusTip());
+    overviewAction1->setCheckable(true);
+    overviewAction1->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(overviewAction1);
+    
+    overviewAction2 = new QAction(QIcon(":/icons/mine"), tr("&Mine"), this);
+    overviewAction2->setStatusTip(tr("Shverview of wallet"));
+    overviewAction2->setToolTip(overviewAction->statusTip());
+    overviewAction2->setCheckable(true);
+    overviewAction2->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(overviewAction2);
+
 
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
@@ -211,7 +226,13 @@ void BitcoinGUI::createActions()
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
-
+    
+    connect(overviewAction1, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(overviewAction1, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
+    
+    connect(overviewAction2, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(overviewAction2, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
+    
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
@@ -295,6 +316,8 @@ void BitcoinGUI::createToolBars()
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
+   //toolbar->addAction(overviewAction1);
+   //toolbar->addAction(overviewAction2);
 }
 
 void BitcoinGUI::setClientModel(ClientModel *clientModel)
@@ -371,6 +394,7 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     signMessageAction->setEnabled(enabled);
     verifyMessageAction->setEnabled(enabled);
     addressBookAction->setEnabled(enabled);
+    overviewAction1->setEnabled(enabled);
 }
 
 void BitcoinGUI::createTrayIcon()
