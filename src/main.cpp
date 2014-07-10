@@ -1879,9 +1879,12 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
             CScript scriptPubKey;
             scriptPubKey.SetDestination(address.Get());
             if (vtx[0].vout[0].scriptPubKey != scriptPubKey)
-            	    return error("ConnectBlock() : ");        
+            	    return error("ConnectBlock() : Incorrect foundation address");
+            if (pindex->pprev->nHeight > 36000 && (vtx[0].vout[0].nValue != (FOUNDATION_SUPPORT * COIN) || vtx[0].GetValueOut()!= (FOUNDATION_SUPPORT * COIN)))
+            	    return error("ConnectBlock() : Incorrect foundation coinbase (actual=%"PRI64d" vs limit=%"PRI64d")", vtx[0].vout[0].nValue, FOUNDATION_SUPPORT * COIN);            
     }
 
+    
     if (!control.Wait())
         return state.DoS(100, false);
     int64 nTime2 = GetTimeMicros() - nStart;
@@ -2347,7 +2350,7 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
 
         #ifdef _WIN32
             // Check proof of work       
-            if(nHeight >= 34140){
+            if(nHeight >= 11720){
                 unsigned int nBitsNext = GetNextWorkRequired(pindexPrev, this);
                 double n1 = ConvertBitsToDouble(nBits);
                 double n2 = ConvertBitsToDouble(nBitsNext);
