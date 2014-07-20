@@ -1320,8 +1320,8 @@ unsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const CBlockH
 
     if (bnNew > bnProofOfWorkLimit){
         bnNew = bnProofOfWorkLimit;
-    }
-     
+    }     
+      	            
     return bnNew.GetCompact();
 }
 
@@ -1880,7 +1880,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
             scriptPubKey.SetDestination(address.Get());
             if (vtx[0].vout[0].scriptPubKey != scriptPubKey)
             	    return error("ConnectBlock() : Incorrect foundation address");
-            if (pindex->pprev->nHeight > 36000 && (vtx[0].vout[0].nValue != (FOUNDATION_SUPPORT * COIN) || vtx[0].GetValueOut()!= (FOUNDATION_SUPPORT * COIN)))
+            if (pindex->pprev->nHeight > 46000 && (vtx[0].vout[0].nValue != (FOUNDATION_SUPPORT * COIN) || vtx[0].GetValueOut()!= (FOUNDATION_SUPPORT * COIN)))
             	    return error("ConnectBlock() : Incorrect foundation coinbase (actual=%"PRI64d" vs limit=%"PRI64d")", vtx[0].vout[0].nValue, FOUNDATION_SUPPORT * COIN);            
     }
 
